@@ -16,4 +16,15 @@ describe('VatForm', () => {
     render(<VatForm />);
     expect(element('form[id="vatForm"]')).not.toBeNull();
   });
+
+  describe('NIP field', () => {
+    it('renders as a text box', () => {
+      render(<VatForm />);
+      const nipField = element('form[id="vatForm"]')!.elements.nip;
+
+      expect(nipField).not.toBeNull();
+      expect(nipField.tagName).toEqual('INPUT');
+      expect(nipField.type).toEqual('text');
+    });
+  });
 });

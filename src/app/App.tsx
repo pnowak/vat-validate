@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
-import { Editor } from '../features/editor/Editor';
+import { VatForm } from '../features/vatform/VatForm';
 
 export const App = (): ReactElement => {
   return (
-    <Editor />
+    <VatForm />
   );
 };
