@@ -8,6 +8,7 @@ export const VatForm = (): ReactElement => {
         name="nip"
         id="nip"
       />
+      <input type="submit" value="Check VAT" />
     </form>
   )
 };

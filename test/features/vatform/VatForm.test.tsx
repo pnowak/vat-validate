@@ -27,4 +27,13 @@ describe('VatForm', () => {
       expect(nipField.type).toEqual('text');
     });
   });
+
+  describe('submit button', () => {
+    const submitButton = () => element('input[type="submit"]');
+    
+    it('has a submit button', () => {
+      render(<VatForm />);
+      expect(submitButton()).not.toBeNull();
+    });
+  });
 });
