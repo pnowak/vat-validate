@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "jsx": "react",
+        "lib": [
+            "ES2015",
+            "dom"
+        ],
+        "outDir": "dist",
+        "sourceMap": true,
+        "strict": true,
+        "target": "ES2015",
+        "esModuleInterop": true,
+        "module": "commonjs"
+    },
+    "include": [
+        "src"
+    ],
+    "exclude": [
+        "test"
+    ]
+}
