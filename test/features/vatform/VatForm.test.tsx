@@ -1,8 +1,10 @@
 import React from 'react';
+import ReactTestUtils from 'react-dom/test-utils';
 import {
   Element,
   LabelFor,
-  createContainer
+  createContainer,
+  withEvent
 } from '../../helpers';
 import { VatForm } from '../../../src/features/vatform/VatForm';
 
@@ -39,6 +41,24 @@ describe('VatForm', () => {
       const nipFiled = element('form[id="vatForm"]')!.elements.nip;
 
       expect(nipFiled.id).toEqual('nip');
+    });
+
+    it('includes the existing value for the NIP', () => {
+      render(<VatForm />);
+      const nipFiled = element('form[id="vatForm"]')!.elements.nip;
+
+      expect(nipFiled.value).toEqual('');
+    });
+
+    it('react on change event', () => {
+      render(<VatForm />);
+      const nipFiled = element('form[id="vatForm"]')!.elements.nip;
+
+      expect(nipFiled.value).toEqual('');
+
+      ReactTestUtils.Simulate.change(nipFiled, withEvent('nip', '123'));
+
+      expect(nipFiled.value).toEqual('123');
     });
   });
 

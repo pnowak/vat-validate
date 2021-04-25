@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 
 const Form = styled.form`
@@ -48,6 +48,8 @@ const Form = styled.form`
 `;
 
 export const VatForm = (): ReactElement => {
+  const [nip, setNip] = useState('');
+
   return (
     <Form id="vatForm">
       <label htmlFor="nip">NIP number</label>
@@ -55,6 +57,10 @@ export const VatForm = (): ReactElement => {
         type="text"
         name="nip"
         id="nip"
+        value={nip}
+        onChange={(e: React.FormEvent<HTMLInputElement>): void =>
+          setNip((e.target as HTMLInputElement).value)
+        }
       />
       <input type="submit" value="Check NIP" />
     </Form>
