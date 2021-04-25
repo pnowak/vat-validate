@@ -76,5 +76,11 @@ describe('VatForm', () => {
       render(<VatForm />);
       expect(element('div#output')).not.toBeNull();
     });
+
+    it('initially nothing to show', () => {
+      render(<VatForm />);
+
+      expect(element('div#output').textContent).toEqual('');
+    });
   });
 });

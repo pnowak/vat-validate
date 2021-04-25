@@ -21,6 +21,7 @@ const Form = styled.form`
     padding: 0.5rem;
     font-size: 1rem;
     border: 1px solid #2E2E2E;
+    border-radius: .4rem;
     &:focus {
       outline: 0;
       border-color: #000000;
@@ -47,6 +48,22 @@ const Form = styled.form`
   }
 `;
 
+const Output = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: center;
+  align-items: center;
+  justify-items: center;
+  margin: 3rem auto;
+  width: 60%;
+  background-color: #efefef;
+  border: 1px solid #2E2E2E;
+  border-radius: .4rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
+  font-weight: 500;
+`;
+
 export const VatForm = (): ReactElement => {
   const [nip, setNip] = useState('');
 
@@ -65,7 +82,8 @@ export const VatForm = (): ReactElement => {
         />
         <input type="submit" value="Check NIP" />
       </Form>
-      <div id="output"></div>
+      <Output id="output">
+      </Output>
     </>
   )
 };
