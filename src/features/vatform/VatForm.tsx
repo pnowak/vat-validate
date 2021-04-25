@@ -1,5 +1,8 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, BaseSyntheticEvent, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { RootState } from '../../app/rootReducer';
+import { FETCH_VAT_REQUEST } from './types';
 
 const Form = styled.form`
   display: grid;
@@ -66,10 +69,23 @@ const Output = styled.div`
 
 export const VatForm = (): ReactElement => {
   const [nip, setNip] = useState('');
+  const { vat } = useSelector((state: RootState) => state.vat);
+  const dispatch = useDispatch();
+  console.log({vat});
+
+  const handleSubmit = (event: BaseSyntheticEvent) => {
+    event.preventDefault();
+    dispatch({
+      type: FETCH_VAT_REQUEST,
+      vat: nip
+    });
+  };
+
+  const submitting = status === 'SUBMITTING';
 
   return (
     <>
-      <Form id="vatForm">
+      <Form id="vatForm" onSubmit={handleSubmit}>
         <label htmlFor="nip">NIP number</label>
         <input
           type="text"
@@ -80,9 +96,10 @@ export const VatForm = (): ReactElement => {
             setNip((e.target as HTMLInputElement).value)
           }
         />
-        <input type="submit" value="Check NIP" />
+        <input type="submit" value="Check NIP" disabled={submitting} />
       </Form>
       <Output id="output">
+        {vat}
       </Output>
     </>
   )
