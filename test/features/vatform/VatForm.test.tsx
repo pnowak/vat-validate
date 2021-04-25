@@ -33,6 +33,13 @@ describe('VatForm', () => {
       expect(labelFor('nip')).not.toBeNull();
       expect(labelFor('nip')!.textContent).toEqual('NIP number');
     });
+
+    it('assign an id that matches the label id to the width field', () => {
+      render(<VatForm />);
+      const nipFiled = element('form[id="vatForm"]')!.elements.nip;
+
+      expect(nipFiled.id).toEqual('nip');
+    });
   });
 
   describe('submit button', () => {
