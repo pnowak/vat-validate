@@ -70,4 +70,11 @@ describe('VatForm', () => {
       expect(submitButton()).not.toBeNull();
     });
   });
+
+  describe('has an output element which', () => {
+    it('renders a div with the right id', () => {
+      render(<VatForm />);
+      expect(element('div#output')).not.toBeNull();
+    });
+  });
 });

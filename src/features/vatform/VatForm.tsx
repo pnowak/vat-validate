@@ -51,18 +51,21 @@ export const VatForm = (): ReactElement => {
   const [nip, setNip] = useState('');
 
   return (
-    <Form id="vatForm">
-      <label htmlFor="nip">NIP number</label>
-      <input
-        type="text"
-        name="nip"
-        id="nip"
-        value={nip}
-        onChange={(e: React.FormEvent<HTMLInputElement>): void =>
-          setNip((e.target as HTMLInputElement).value)
-        }
-      />
-      <input type="submit" value="Check NIP" />
-    </Form>
+    <>
+      <Form id="vatForm">
+        <label htmlFor="nip">NIP number</label>
+        <input
+          type="text"
+          name="nip"
+          id="nip"
+          value={nip}
+          onChange={(e: React.FormEvent<HTMLInputElement>): void =>
+            setNip((e.target as HTMLInputElement).value)
+          }
+        />
+        <input type="submit" value="Check NIP" />
+      </Form>
+      <div id="output"></div>
+    </>
   )
 };
