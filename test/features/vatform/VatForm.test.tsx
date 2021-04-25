@@ -1,15 +1,16 @@
 import React from 'react';
 import {
   Element,
+  LabelFor,
   createContainer
 } from '../../helpers';
 import { VatForm } from '../../../src/features/vatform/VatForm';
 
 describe('VatForm', () => {
-  let element: Element, render;
+  let element: Element, labelFor: LabelFor, render;
 
   beforeEach(() => {
-    ({ element, render } = createContainer());
+    ({ element, render, labelFor } = createContainer());
   });
 
   it('renders a form', () => {
@@ -25,6 +26,12 @@ describe('VatForm', () => {
       expect(nipField).not.toBeNull();
       expect(nipField.tagName).toEqual('INPUT');
       expect(nipField.type).toEqual('text');
+    });
+
+    it('renders a label for the NIP field', () => {
+      render(<VatForm />);
+      expect(labelFor('nip')).not.toBeNull();
+      expect(labelFor('nip')!.textContent).toEqual('NIP number');
     });
   });
 

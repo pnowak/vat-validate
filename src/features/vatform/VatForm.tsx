@@ -14,7 +14,7 @@ const Form = styled.form`
   font-weight: 600;
   label {
     display: block;
-    margin-bottom: 1rem;
+    margin-bottom: -3rem;
   }
   input {
     width: 40%;
@@ -50,6 +50,7 @@ const Form = styled.form`
 export const VatForm = (): ReactElement => {
   return (
     <Form id="vatForm">
+      <label htmlFor="nip">NIP number</label>
       <input
         type="text"
         name="nip"
