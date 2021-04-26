@@ -3,11 +3,11 @@ export const FETCH_VAT_STARTED = 'FETCH_VAT_STARTED';
 export const FETCH_VAT_SUCCEEDED = 'FETCH_VAT_SUCCEEDED';
 export const FETCH_VAT_FAILED = 'FETCH_VAT_FAILED';
 
-export type VATAttributes = {
+export interface VATAttributes {
     valid: boolean,
-    name: string,
-    address: string,
-};
+    company_name: string,
+    company_address: string,
+}
 
 export type FetchState = {
     error: null | string,

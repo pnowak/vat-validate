@@ -2,7 +2,7 @@ import React, { ReactElement, BaseSyntheticEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { RootState } from '../../app/rootReducer';
-import { FETCH_VAT_REQUEST } from './types';
+import { FETCH_VAT_REQUEST, VATAttributes } from './types';
 
 const Form = styled.form`
   display: grid;
@@ -53,25 +53,38 @@ const Form = styled.form`
 
 const Output = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
-  align-content: center;
-  align-items: center;
-  justify-items: center;
+  align-content: start;
+  align-items: start;
+  justify-items: start;
   margin: 3rem auto;
-  width: 60%;
+  padding: 0 1rem;
+  width: 50%;
   background-color: #efefef;
   border: 1px solid #2E2E2E;
   border-radius: .4rem;
-  font-size: 1.5rem;
-  line-height: 1.5;
+  font-size: 1rem;
+  line-height: 1.1;
   font-weight: 500;
 `;
+
+type Props = {
+  vat: VATAttributes
+};
+
+export const Company = ({ vat }: Props): ReactElement => {
+  return (
+    <div>
+      <h2>{`Valid - ${vat.valid}`}</h2>
+      <p>{`Nazwa firmy: ${vat.company_name}`}</p>
+      <p>{`Adress firmy: ${vat.company_address}`}</p>
+    </div>
+  );
+}
 
 export const VatForm = (): ReactElement => {
   const [nip, setNip] = useState('');
   const { vat } = useSelector((state: RootState) => state.vat);
   const dispatch = useDispatch();
-  console.log({vat});
 
   const handleSubmit = (event: BaseSyntheticEvent) => {
     event.preventDefault();
@@ -99,7 +112,7 @@ export const VatForm = (): ReactElement => {
         <input type="submit" value="Check NIP" disabled={submitting} />
       </Form>
       <Output id="output">
-        {vat}
+        {vat && <Company vat={vat} />}
       </Output>
     </>
   )

@@ -1,52 +1,36 @@
 import { put, call } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
+import dotenv from 'dotenv';
+
 import { 
   FETCH_VAT_STARTED,
   FETCH_VAT_SUCCEEDED,
   FETCH_VAT_FAILED } from './types';
 
+dotenv.config({ path: '.env' });
+
 type Props = {
   vat: TemplateStringsArray
 };
 
-function soapRequest(vat: TemplateStringsArray): string {
-  return `<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:tns1="urn:ec.europa.eu:taxud:vies:services:checkVat:types"
-    xmlns:impl="urn:ec.europa.eu:taxud:vies:services:checkVat">
-    <soap:Header>
-    </soap:Header>
-    <soap:Body>
-        <tns1:checkVat xmlns:tns1="urn:ec.europa.eu:taxud:vies:services:checkVat:types"
-        xmlns="urn:ec.europa.eu:taxud:vies:services:checkVat:types">
-        <tns1:countryCode>PL</tns1:countryCode>
-        <tns1:vatNumber>${vat}</tns1:vatNumber>
-        </tns1:checkVat>
-    </soap:Body>
-    </soap:Envelope>`;
-}
+const fetchJSON = async (input: string): Promise<Record<string, unknown>> => {
+  const res = await fetch(input);
+  const data = await res.json();
 
-const fetch = (url: RequestInfo, vat: Props) => {
-  const soapData = soapRequest`vat`;
-  console.log(soapData, vat);
-
-  window.fetch(url, {
-    body: soapData,
-    method: 'POST',
-    credentials: 'same-origin',
-    headers: { 'Content-Type': 'text/xml', dataType: 'xml' }
-  });
+  return data;
 };
 
 export function* fetchVAT({ vat }: Props): SagaIterator {
   yield put({ type: FETCH_VAT_STARTED });
 
   try {
-    const result = yield call(fetch, 'http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl', vat);
+    const res = yield call(fetchJSON, `http://www.apilayer.net/api/validate?access_key=${process.env.KEY_APILAYER}&vat_number=PL${vat}`);
+    console.log(res);
 
     yield put({
       type: FETCH_VAT_SUCCEEDED,
       payload: {
-        vat: result.data
+        vat: res
       }
     })
 
