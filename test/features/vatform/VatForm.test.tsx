@@ -75,6 +75,15 @@ describe('VatForm', () => {
 
       expect(nipFiled.value).toEqual('123');
     });
+
+    it('reset value after submitting', async () => {
+      renderWithStore(<VatForm />);
+      const nipFiled = element('form[id="vatForm"]')!.elements.nip;
+
+      await store.dispatch({ type: 'FETCH_VAT_REQUEST' });
+
+      expect(nipFiled.value).toEqual('');
+    });
   });
 
   describe('submit button', () => {
