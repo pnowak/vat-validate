@@ -21,6 +21,7 @@ describe('VatForm', () => {
 
   it('render a form', () => {
     renderWithStore(<VatForm />);
+
     expect(element('form[id="vatForm"]')).not.toBeNull();
   });
 
@@ -45,6 +46,7 @@ describe('VatForm', () => {
 
     it('render a label for the NIP field', () => {
       renderWithStore(<VatForm />);
+
       expect(labelFor('nip')).not.toBeNull();
       expect(labelFor('nip')!.textContent).toEqual('NIP number');
     });
@@ -80,13 +82,28 @@ describe('VatForm', () => {
     
     it('has a submit button', () => {
       renderWithStore(<VatForm />);
+
       expect(submitButton()).not.toBeNull();
+    });
+
+    it('disables the submit button when submitting', async () => {
+      renderWithStore(<VatForm />);
+      store.dispatch({ type: 'FETCH_VAT_REQUEST' });
+
+      expect(submitButton().disabled).toBeTruthy();
+    });
+
+    it('initially does not disable submit button', () => {
+      renderWithStore(<VatForm />);
+
+      expect(submitButton().disabled).toBeFalsy();
     });
   });
 
   describe('has an output element which', () => {
-    it('renderWithStores a div with the right id', () => {
+    it('render a div with the right id', () => {
       renderWithStore(<VatForm />);
+
       expect(element('div#output')).not.toBeNull();
     });
 

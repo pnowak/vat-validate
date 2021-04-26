@@ -83,7 +83,7 @@ export const Company = ({ vat }: Props): ReactElement => {
 
 export const VatForm = (): ReactElement => {
   const [nip, setNip] = useState('');
-  const { vat } = useSelector((state: RootState) => state.vat);
+  const { vat, status } = useSelector((state: RootState) => state.vat);
   const dispatch = useDispatch();
 
   const handleSubmit = (event: BaseSyntheticEvent) => {
@@ -94,7 +94,7 @@ export const VatForm = (): ReactElement => {
     });
   };
 
-  const submitting = status === 'SUBMITTING';
+  const submitting = status === 'STARTED';
 
   return (
     <>
