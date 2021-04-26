@@ -1,23 +1,16 @@
 import { put, call } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import dotenv from 'dotenv';
-
 import { 
   FETCH_VAT_STARTED,
   FETCH_VAT_SUCCEEDED,
   FETCH_VAT_FAILED } from './types';
+import { fetchJSON } from '../../helpers';
 
 dotenv.config({ path: '.env' });
 
 type Props = {
   vat: TemplateStringsArray
-};
-
-const fetchJSON = async (input: string): Promise<Record<string, unknown>> => {
-  const res = await fetch(input);
-  const data = await res.json();
-
-  return data;
 };
 
 export function* fetchVAT({ vat }: Props): SagaIterator {

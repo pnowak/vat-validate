@@ -7,10 +7,10 @@ type Props = {
 
 export const Company = ({ vat }: Props): ReactElement => {
   return (
-    <div>
+    <>
       <h2>{`Valid - ${vat.valid}`}</h2>
       <p>{`Nazwa firmy: ${vat.company_name}`}</p>
       <p>{`Adress firmy: ${vat.company_address}`}</p>
-    </div>
+    </>
   );
 }

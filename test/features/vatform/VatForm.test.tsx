@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { expectRedux } from 'expect-redux';
+import 'whatwg-fetch';
+import dotenv from 'dotenv';
 import {
   Element,
   LabelFor,
@@ -10,13 +12,26 @@ import {
 } from '../../helpers';
 import { VatForm } from '../../../src/features/vatform/VatForm';
 import { App } from '../../../src/app/App';
+import { fetchJSON } from '../../../src/helpers';
+import { VATAttributes } from '../../../src/features/vatform/types';
+
+dotenv.config({ path: '.env' });
 
 describe('VatForm', () => {
   let element: Element, labelFor: LabelFor, form: Form,
     renderWithStore, store;
 
+  const company: VATAttributes = {
+    company_address: 'AL. GRUNWALDZKA 212\n80-266 GDAŃSK',
+    company_name: 'RTCLAB SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ',
+    valid: true
+  };
+
   beforeEach(() => {
     ({ element, labelFor, form, renderWithStore, store } = createContainerWithStore());
+    jest
+      .spyOn(window, 'fetch')
+      .mockReturnValue(fetchJSON(company))
   });
 
   it('render a form', () => {
@@ -32,6 +47,21 @@ describe('VatForm', () => {
     return expectRedux(store)
       .toDispatchAnAction()
       .ofType('FETCH_VAT_REQUEST');
+  });
+
+  it.skip('fetches data after submitting', async () => {
+    renderWithStore(<App />);
+
+    expect(window.fetch).toHaveBeenCalledWith(
+      `http://www.apilayer.net/api/validate?access_key=${process.env.KEY_APILAYER}&vat_number=PL5842748894`,
+      expect.objectContaining(
+        {
+          company_address: 'AL. GRUNWALDZKA 212\n80-266 GDAŃSK',
+          company_name: 'RTCLAB SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ',
+          valid: true
+        }
+      )
+    );
   });
 
   describe('NIP field', () => {
@@ -120,6 +150,17 @@ describe('VatForm', () => {
       renderWithStore(<VatForm />);
 
       expect(element('div#output').textContent).toEqual('');
+    });
+
+    it.skip('shows company details after submitting data', async () => {
+      renderWithStore(<VatForm />);
+      await window.fetch.mockReturnValue(fetchJSON(`http://www.apilayer.net/api/validate?access_key=${process.env.KEY_APILAYER}&vat_number=PL5842748894`))
+      
+      const output = () => element('div#output');
+      const paragraphs = output().querySelectorAll('p');
+
+      expect(output().children).toHaveLength(3);
+      expect(paragraphs[0].textContent).toEqual('Nazwa firmy: RTCLAB SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ');
     });
   });
 });
