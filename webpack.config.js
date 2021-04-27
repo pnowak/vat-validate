@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
-const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   mode: 'development',
@@ -26,9 +24,5 @@ module.exports = {
   devtool: 'inline-source-map',
   module: {
     rules: [{ test: /\.tsx?$/, loader: 'ts-loader' }],
-  },
-  plugins: [
-    new NodePolyfillPlugin(),
-    new Dotenv(),
-  ]
+  }
 };

@@ -9,7 +9,8 @@ export const fetchState: FetchState = {
   error: null,
   isLoading: false,
   status: '',
-  vat: '',
+  company: '',
+  prevCompany: []
 };
 
 export const reducer = (state = fetchState, action: Action): FetchState => {
@@ -28,7 +29,8 @@ export const reducer = (state = fetchState, action: Action): FetchState => {
         ...state,
         isLoading: false,
         status: 'SUCCESSFUL',
-        vat: payload.vat
+        company: payload.company,
+        prevCompany: [payload.company, ...state.prevCompany],
       };
     }
     case FETCH_VAT_FAILED: {

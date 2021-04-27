@@ -1,11 +1,11 @@
 import React, { ReactElement, BaseSyntheticEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { RootState } from '../../app/rootReducer';
+import { FetchedState } from '../vatform/reducer';
 import { Company } from './Company';
 import { FETCH_VAT_REQUEST } from './types';
 
-const Form = styled.form`
+const FormStyled = styled.form`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr 1fr;
@@ -45,7 +45,7 @@ const Form = styled.form`
   }
 `;
 
-const Output = styled.div`
+const OutputStyled = styled.div`
   display: grid;
   align-content: start;
   align-items: start;
@@ -61,10 +61,16 @@ const Output = styled.div`
   font-weight: 500;
 `;
 
+const PrevStyled = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+`;
+
 export const VatForm = (): ReactElement => {
   const [nip, setNip] = useState('');
-  const { vat, status } = useSelector((state: RootState) => state.vat);
+  const { company, prevCompany, status } = useSelector((state: FetchedState) => state);
   const dispatch = useDispatch();
+  console.log({ company, prevCompany, status });
 
   const resetForm = () => setNip('');
 
@@ -72,7 +78,7 @@ export const VatForm = (): ReactElement => {
     event.preventDefault();
     dispatch({
       type: FETCH_VAT_REQUEST,
-      vat: nip
+      company: nip
     });
 
     resetForm();
@@ -82,7 +88,7 @@ export const VatForm = (): ReactElement => {
 
   return (
     <>
-      <Form id="vatForm" onSubmit={handleSubmit}>
+      <FormStyled id="vatForm" onSubmit={handleSubmit}>
         <label htmlFor="nip">NIP number</label>
         <input
           type="text"
@@ -94,10 +100,17 @@ export const VatForm = (): ReactElement => {
           }
         />
         <input type="submit" value="Check NIP" disabled={submitting} />
-      </Form>
-      <Output id="output">
-        {vat && <Company vat={vat} />}
-      </Output>
+      </FormStyled>
+      <OutputStyled id="output">
+        {company && <Company company={company} />}
+      </OutputStyled>
+      <PrevStyled> 
+        {
+          prevCompany.map((company) => {
+            <Company key={company.query} company={company} />
+          })
+        }
+      </PrevStyled>
     </>
   )
 };

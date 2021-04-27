@@ -2,7 +2,6 @@ import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { expectRedux } from 'expect-redux';
 import 'whatwg-fetch';
-import dotenv from 'dotenv';
 import {
   Element,
   LabelFor,
@@ -12,10 +11,9 @@ import {
 } from '../../helpers';
 import { VatForm } from '../../../src/features/vatform/VatForm';
 import { App } from '../../../src/app/App';
+import { API_BASE_URL, ACCESS_KEY } from '../../../src/config';
 import { fetchJSON } from '../../../src/helpers';
 import { VATAttributes } from '../../../src/features/vatform/types';
-
-dotenv.config({ path: '.env' });
 
 describe('VatForm', () => {
   let element: Element, labelFor: LabelFor, form: Form,
@@ -53,7 +51,7 @@ describe('VatForm', () => {
     renderWithStore(<App />);
 
     expect(window.fetch).toHaveBeenCalledWith(
-      `http://www.apilayer.net/api/validate?access_key=${process.env.KEY_APILAYER}&vat_number=PL5842748894`,
+      `${API_BASE_URL}?access_key=${ACCESS_KEY}&vat_number=PL5842748894`,
       expect.objectContaining(
         {
           company_address: 'AL. GRUNWALDZKA 212\n80-266 GDAŃSK',

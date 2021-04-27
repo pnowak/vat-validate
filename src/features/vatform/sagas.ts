@@ -1,29 +1,26 @@
 import { put, call } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
-import dotenv from 'dotenv';
 import { 
   FETCH_VAT_STARTED,
   FETCH_VAT_SUCCEEDED,
   FETCH_VAT_FAILED } from './types';
 import { fetchJSON } from '../../helpers';
-
-dotenv.config({ path: '.env' });
+import { API_BASE_URL, ACCESS_KEY } from '../../config';
 
 type Props = {
-  vat: TemplateStringsArray
+  company: TemplateStringsArray
 };
 
-export function* fetchVAT({ vat }: Props): SagaIterator {
+export function* fetchVAT({ company }: Props): SagaIterator {
   yield put({ type: FETCH_VAT_STARTED });
 
   try {
-    const res = yield call(fetchJSON, `http://www.apilayer.net/api/validate?access_key=${process.env.KEY_APILAYER}&vat_number=PL${vat}`);
-    console.log(res);
+    const res = yield call(fetchJSON, `${API_BASE_URL}?access_key=${ACCESS_KEY}&vat_number=PL${company}`);
 
     yield put({
       type: FETCH_VAT_SUCCEEDED,
       payload: {
-        vat: res
+        company: res
       }
     })
 

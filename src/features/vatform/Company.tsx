@@ -2,15 +2,15 @@ import React, { ReactElement } from 'react';
 import { VATAttributes } from './types';
 
 type Props = {
-  vat: VATAttributes
+  company: VATAttributes
 };
 
-export const Company = ({ vat }: Props): ReactElement => {
+export const Company = ({ company }: Props): ReactElement => {
   return (
     <>
-      <h2>{`Valid - ${vat.valid}`}</h2>
-      <p>{`Nazwa firmy: ${vat.company_name}`}</p>
-      <p>{`Adress firmy: ${vat.company_address}`}</p>
+      <h2>{`Zapytanie o ${company.query}`}{' - '}{`${company.valid}`}</h2>
+      <p>{`Nazwa firmy: ${company.company_name}`}</p>
+      <p>{`Adress firmy: ${company.company_address}`}</p>
     </>
   );
 }

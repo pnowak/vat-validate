@@ -4,6 +4,7 @@ export const FETCH_VAT_SUCCEEDED = 'FETCH_VAT_SUCCEEDED';
 export const FETCH_VAT_FAILED = 'FETCH_VAT_FAILED';
 
 export interface VATAttributes {
+    query: string;
     valid: boolean,
     company_name: string,
     company_address: string,
@@ -13,7 +14,8 @@ export type FetchState = {
     error: null | string,
     isLoading: boolean,
     status: 'STARTED' | 'SUCCESSFUL'| 'FAILED' | '',
-    vat: VATAttributes | '',
+    company: VATAttributes | '',
+    prevCompany: VATAttributes[]
 };
 
 export type Action =  {
@@ -21,7 +23,8 @@ export type Action =  {
     status: string,
     isLoading: boolean,
     payload: { 
-        vat: VATAttributes,
+        company: VATAttributes,
+        prevCompany: VATAttributes[]
         error: string
     }
 };
