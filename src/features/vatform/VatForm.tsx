@@ -106,9 +106,9 @@ export const VatForm = (): ReactElement => {
       </OutputStyled>
       <PrevStyled> 
         {
-          prevCompany.map((company) => {
-            <Company key={company.query} company={company} />
-          })
+          prevCompany.map((c) => (
+            <Company key={c.query} company={c} />
+          ))
         }
       </PrevStyled>
     </>

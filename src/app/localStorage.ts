@@ -1,6 +1,6 @@
 import { FetchedState } from '../features/vatform/reducer';
 
-export const loadState = () => {
+export const loadState = (): FetchedState | undefined => {
   try {
     const serializedState = localStorage.getItem('state');
 
@@ -15,7 +15,7 @@ export const loadState = () => {
   }
 };
 
-export const saveState = (state: FetchedState) => {
+export const saveState = (state: FetchedState): void => {
   try {
     const serializedState = JSON.stringify(state);
 
