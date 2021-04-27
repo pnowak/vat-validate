@@ -1,22 +1,4 @@
 import { FetchedState } from '../features/vatform/reducer';
-// export const save = (store: { getState: () => { (): any; new(): any; vat: any; }; }) => (next: (arg0: any) => any) => (action: any) => {
-//   const result = next(action);
-
-//   localStorage.setItem(
-//     'applicationState',
-//     JSON.stringify(store.getState().company)
-//   );
-
-//   return result;
-// };
-
-// export const load = () => {
-//   const serializedState = localStorage.getItem('applicationState');
-
-//   if (serializedState && serializedState !== null) {
-//     return JSON.parse(serializedState);
-//   }
-// };
 
 export const loadState = () => {
   try {
