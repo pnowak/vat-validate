@@ -21,6 +21,6 @@ export const saveState = (state: FetchedState): void => {
 
     localStorage.setItem('state', serializedState);
   } catch (err) {
-    // Ignore write errors.
+    console.error();
   }
 };

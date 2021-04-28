@@ -50,27 +50,20 @@ const OutputStyled = styled.div`
   align-content: start;
   align-items: start;
   justify-items: start;
-  margin: 3rem auto;
-  padding: 0 1rem;
-  width: 50%;
-  background-color: #efefef;
-  border: 1px solid #2E2E2E;
-  border-radius: .4rem;
-  font-size: 1rem;
-  line-height: 1.1;
-  font-weight: 500;
+  margin-bottom: 3rem;
 `;
 
 const PrevStyled = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, minmax(min-content, 330px));
+  gap: 1rem;
+  justify-content: center;
 `;
 
 export const VatForm = (): ReactElement => {
   const [nip, setNip] = useState('');
   const { company, prevCompany, status } = useSelector((state: FetchedState) => state);
   const dispatch = useDispatch();
-  console.log({ company, prevCompany, status });
 
   const resetForm = () => setNip('');
 

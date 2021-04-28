@@ -13,7 +13,6 @@ function* rootSaga() {
 }
 
 const persistentState = loadState();
-console.log('persistentState', persistentState);
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const configureStore = (storeEnhancers = []) => {
@@ -33,6 +32,3 @@ export const configureStore = (storeEnhancers = []) => {
 
   return store;
 };
-
-// export const configureStoreWithLocalStorage = () =>
-//   configureStore(undefined, load());
