@@ -1,2 +1,2 @@
 export const API_BASE_URL = 'http://www.apilayer.net/api/validate';
-export const ACCESS_KEY = 'bc694be9f0826e62cd23a8b5f18448d3';
+export const ACCESS_KEY = 'e008e83035bfe38d6f3e4ec31039e7e9';
