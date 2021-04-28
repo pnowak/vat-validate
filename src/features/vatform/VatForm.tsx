@@ -82,7 +82,7 @@ export const VatForm = (): ReactElement => {
   return (
     <>
       <FormStyled id="vatForm" onSubmit={handleSubmit}>
-        <label htmlFor="nip">NIP number</label>
+        <label htmlFor="nip">Wprowadź numer NIP</label>
         <input
           type="text"
           name="nip"
@@ -92,7 +92,7 @@ export const VatForm = (): ReactElement => {
             setNip((e.target as HTMLInputElement).value)
           }
         />
-        <input type="submit" value="Check NIP" disabled={submitting} />
+        <input type="submit" value="Sprawdź NIP" disabled={submitting} />
       </FormStyled>
       <OutputStyled id="output">
         {company && <Company company={company} />}
