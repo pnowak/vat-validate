@@ -25,14 +25,14 @@ export const reducer = (state = fetchState, action: Action): FetchState => {
       };
     }
     case FETCH_VAT_SUCCEEDED: {
-      const hasCompany = state.prevCompany.findIndex(c => payload.company.query === c.query);
+      const index = state.prevCompany.findIndex(c => payload.company.query === c.query);
 
       return {
         ...state,
         isLoading: false,
         status: 'SUCCESSFUL',
         company: payload.company,
-        prevCompany: hasCompany === -1 ? [payload.company, ...state.prevCompany] : [...state.prevCompany],
+        prevCompany: index === -1 ? [payload.company, ...state.prevCompany] : [...state.prevCompany],
       };
     }
     case FETCH_VAT_FAILED: {
