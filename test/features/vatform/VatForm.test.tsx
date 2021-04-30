@@ -76,7 +76,7 @@ describe('VatForm', () => {
       renderWithStore(<VatForm />);
 
       expect(labelFor('nip')).not.toBeNull();
-      expect(labelFor('nip')!.textContent).toEqual('NIP number');
+      expect(labelFor('nip')!.textContent).toEqual('Wprowadź numer NIP');
     });
 
     it('assign an id that matches the label id to the width field', () => {
