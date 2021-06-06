@@ -22,14 +22,25 @@ describe('VatForm', () => {
   const company: VATAttributes = {
     company_address: 'AL. GRUNWALDZKA 212\n80-266 GDAŃSK',
     company_name: 'RTCLAB SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ',
-    valid: true
+    valid: true,
+    query: 'PL..'
   };
+
+  const fetchResponseOk = (body: any) =>
+    Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve(body)
+    });
 
   beforeEach(() => {
     ({ element, labelFor, form, renderWithStore, store } = createContainerWithStore());
     jest
       .spyOn(window, 'fetch')
-      .mockReturnValue(fetchJSON(company))
+      .mockReturnValue(fetchResponseOk({}))
+  });
+
+  afterEach(() => {
+    window.fetch.mockRestore();
   });
 
   it('render a form', () => {
@@ -79,7 +90,7 @@ describe('VatForm', () => {
       expect(labelFor('nip')!.textContent).toEqual('Wprowadź numer NIP');
     });
 
-    it('assign an id that matches the label id to the width field', () => {
+    it('assign an id that matches the label id to the NIP field', () => {
       renderWithStore(<VatForm />);
       const nipFiled = element('form[id="vatForm"]')!.elements.nip;
 
@@ -108,8 +119,10 @@ describe('VatForm', () => {
       renderWithStore(<VatForm />);
       const nipFiled = element('form[id="vatForm"]')!.elements.nip;
 
-      await store.dispatch({ type: 'FETCH_VAT_REQUEST' });
+      ReactTestUtils.Simulate.change(nipFiled, withEvent('nip', '123'));
+      expect(nipFiled.value).toEqual('123');
 
+      ReactTestUtils.Simulate.submit(form('vatForm'));
       expect(nipFiled.value).toEqual('');
     });
   });
